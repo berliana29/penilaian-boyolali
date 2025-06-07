@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Berikan Nilai Objek Wisata di Kabupaten Boyolali</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #0a1d37, #2b9cd4);;
+      padding: 40px;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.4rem;
+      color: #ffffff;
+      margin-bottom: 30px;
+      position: relative;
+      padding-bottom: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease-out;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 90px;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(to right, #00d4ff, #0075ff);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h3 {
+      text-align: center;
+      color: #e0f2ff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+      color: #d0ecff;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    input, textarea {
+      width: 97%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+
+    select, input, textarea {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      gap: 5px;
+      margin: 10px 0 20px;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      font-size: 3rem; /* Ukuran bintang lebih besar */
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out, transform 0.3s ease, text-shadow 0.3s ease; /* Menambahkan transisi untuk text-shadow */
+    }
+
+    /* Ketika hover pada bintang, beri warna kuning ke seluruh bintang sebelumnya */
+    .rating label:hover,
+    .rating input:checked ~ label {
+      color: #FFD700; /* Warna bintang saat dipilih atau di-hover */
+      transform: scale(1.2); /* Membesarkan ukuran bintang saat di-hover atau dipilih */
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 25px rgba(255, 215, 0, 0.8), 0 0 35px rgba(255, 215, 0, 0.8); /* Efek cahaya berbentuk bintang */
+    }
+
+    /* Preview */
+    .preview {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 18px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #eaf6ff;
+  line-height: 1.6;
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #00d4ff;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.preview div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.stars-preview {
+  color: #FFD700;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+    button {
+      background-color: #0056b3;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #003c82;
+    }
+
+    .comments {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+#commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 16px 20px;
+  border-radius: 12px;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+}
+
+.comment:hover {
+  transform: scale(1.01);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.comment-name {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #d6f2ff;
+}
+
+.comment-stars {
+  color: #FFD700;
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+  margin-bottom: 8px;
+}
+
+.comment p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #f0faff;
+}
+
+    /* Modal styles */
+    #thankYouModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 400px;
+    }
+
+    .modal-content h3 {
+      font-size: 1.5rem;
+      color: #0a1d37;
+    }
+
+    .modal-content p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .modal-content button {
+      background-color: #0056b3;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+      background-color: #003c82;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Berikan Penilaian Objek Wisata di Kabupaten Boyolali</h2>
+
+  <label for="placeSelect">Pilih Tempat:</label>
+  <select id="placeSelect">
+    <option value="">-- Pilih Tempat --</option>
+  </select>
+
+  <label for="nameInput">Nama Anda:</label>
+  <input type="text" id="nameInput" placeholder="Nama Anda">
+
+  <div class="rating" id="starRating">
+    <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+    <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
+    <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
+    <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
+    <input type="radio" name="star" id="star1" value="1"><label for="star1">★</label>
+  </div>
+
+  <textarea id="feedback" placeholder="Tulis feedback..."></textarea>
+
+  <div class="preview">
+    <div><strong>Preview Tempat:</strong> <span id="previewPlace">-</span></div>
+    <div><strong>Nama:</strong> <span id="previewName">-</span></div>
+    <div class="stars-preview" id="previewStar">Rating: -</div>
+    <div id="previewFeedback">Feedback: -</div>
+  </div>
+
+  <button onclick="submitRating()">Kirim</button>
+
+  <div class="comments" id="commentsSection">
+    <h3>Penilaian untuk Tempat Ini</h3>
+    <div id="commentsList"></div>
+  </div>
+</div>
+
+<!-- Modal Terima Kasih -->
+<div id="thankYouModal">
+  <div class="modal-content">
+    <h3>Terima kasih!</h3>
+    <p>Terima kasih telah memberikan rating dan feedback.</p>
+    <button onclick="closeModal()">Tutup</button>
+  </div>
+</div>
+
+<script>
+  const places = [
+    "Pemandian Umbul Tlatar", "Kawasan Wisata Waduk Cengklik", "Kawasan Wisata Waduk Kedungombo", "Umbul Sewu",
+    "Umbul Sungsang", "Umbul Tirtomarto", "Umbul Tirtomulyo", "Waduk Cengklik Park", "Angro Wisata Kebun Gulo",
+    "Kebun Raya Indrokilo", "Cepogo Cheese Park", "Wisata Edukasi Religi Boyolali \"Qolbu\"", "Panorama Waterpark",
+    "Simpang Siaga Kabupaten Boyolali", "Monumen 3 Menara", "Monumen Susu Tumpah", "Menara Jagung Boyolali",
+    "Gedung Lembu Sora", "Simpang Solidaritas Kabupaten Boyolali", "Irung Petruk", "Simpang PB VI",
+    "Alun - Alun Pancasila", "Alun - Alun Kidul Kabupaten Boyolali", "Alun - Alun Pengging", "Agro loro Kopi Selo",
+    "DeSeloKaton", "Cafe Lembah Manah", "Soto Seger Hj Fatimah Garuda", "Soto Seger Mbok Giyem Pandanaran",
+    "Cafe Nuannsa Bening", "Analekta", "Warung Iga Bakar Pak Wid", "Resto Mbak Apri 2", "Bakso Sera Simo Pusat",
+    "Selosa Coffee Hills", "D'Garden Cafe Selo", "Cenklik Coffee", "Minoa Coffee and Eatery Cengklik",
+    "Omah Jadah Mbah Rubi", "Warung Penyet Rejosari", "Amanat Coffee & Eatery", "The Mahesa Coffee and Eatery",
+    "De Aroma Kitchen And Hall", "Sate Kambing Pak Darso"
+  ];
+
+  const placeSelect = document.getElementById('placeSelect');
+  const nameInput = document.getElementById('nameInput');
+  const feedback = document.getElementById('feedback');
+  const previewPlace = document.getElementById('previewPlace');
+  const previewName = document.getElementById('previewName');
+  const previewStar = document.getElementById('previewStar');
+  const previewFeedback = document.getElementById('previewFeedback');
+  const stars = document.querySelectorAll('input[name="star"]');
+  const commentsList = document.getElementById('commentsList');
+
+  const commentsData = {};
+
+  function saveCommentsToLocal() {
+    localStorage.setItem("commentsData", JSON.stringify(commentsData));
+  }
+
+  function loadCommentsFromLocal() {
+    const stored = localStorage.getItem("commentsData");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      for (const key in parsed) {
+        if (commentsData[key]) {
+          commentsData[key] = parsed[key];
+        }
+      }
+    }
+  }
+
+  places.forEach(place => {
+    const option = document.createElement('option');
+    option.value = place;
+    option.textContent = place;
+    placeSelect.appendChild(option);
+    commentsData[place] = [];
+  });
+
+  function updatePreview() {
+    const selected = document.querySelector('input[name="star"]:checked');
+    const starValue = selected ? selected.value : '-';
+    const starsText = selected ? '★'.repeat(starValue) + '☆'.repeat(5 - starValue) : '-';
+
+    previewPlace.textContent = placeSelect.value || '-';
+    previewName.textContent = nameInput.value || '-';
+    previewStar.textContent = `Rating: ${starsText}`;
+    previewFeedback.textContent = `Feedback: ${feedback.value || '-'}`;
+  }
+
+  function updateCommentsDisplay(place) {
+    commentsList.innerHTML = '';
+    if (place && commentsData[place]) {
+      commentsData[place].forEach(({ name, rating, comment }) => {
+        const div = document.createElement('div');
+        div.className = 'comment';
+        div.innerHTML = ` 
+          <div class="comment-name">👤 ${name}</div>
+          <div class="comment-stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+          <div>${comment || '<i>(tidak ada komentar)</i>'}</div>
+        `;
+        commentsList.prepend(div);
+      });
+    }
+  }
+
+  function submitToSheet(data) {
+    fetch("https://script.google.com/macros/s/AKfycbyKBp6ji4tt7z5ipCopiGDkoJFVM_KQy4rEp4PORYFqaI1fFB_ybos0MjEaK7Gy1mEXfw/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+
+  function submitRating() {
+    const place = placeSelect.value;
+    const name = nameInput.value.trim();
+    const rating = document.querySelector('input[name="star"]:checked')?.value;
+    const comment = feedback.value.trim();
+
+    if (!place || !rating || !name) {
+      alert("Silakan pilih tempat, beri rating, dan isi nama Anda.");
+      return;
+    }
+
+    commentsData[place].unshift({ name, rating, comment });
+    saveCommentsToLocal();
+
+
+    submitToSheet({ name, place, rating, comment });
+
+    placeSelect.value = '';
+    stars.forEach(s => s.checked = false);
+    nameInput.value = '';
+    feedback.value = '';
+    updatePreview();
+    updateCommentsDisplay(place);
+
+    document.getElementById('thankYouModal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('thankYouModal').style.display = 'none';
+  }
+
+  placeSelect.addEventListener('change', () => {
+    updatePreview();
+    updateCommentsDisplay(placeSelect.value);
+  });
+
+  nameInput.addEventListener('input', updatePreview);
+  feedback.addEventListener('input', updatePreview);
+  stars.forEach(star => star.addEventListener('change', updatePreview));
+
+  window.onload = function () {
+    loadCommentsFromLocal();
+  };
+</script>
+</body>
+</html>
